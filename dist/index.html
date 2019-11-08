@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="static/css/main.css">
+    <link rel="stylesheet" href="static/css/crt.css">
+    <link href="https://fonts.googleapis.com/css?family=Creepster&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Orbitron:900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=VT323&display=swap" rel="stylesheet">
+    <title>Concero WannaCry Escape Room</title>
+    <style>
+        .is-title {
+            font-family: 'VT323', monospace;
+        }
+
+        .alert {
+            font-family: 'VT323', monospace;
+        }
+
+        .main,
+        .decoration,
+        input {
+            font-family: 'VT323', monospace;
+        }
+    </style>
+</head>
+
+<body class="overflow-hidden bg-black">
+
+    <!-- <audio src="assets/sounds/redalert.mp3" id="background-music"></audio> -->
+    <audio src="assets/sounds/redalert.mp3" id="alarm-player"></audio>
+
+    <div class="mgs-alarm absolute top-0 right-0 bg-reaper-red w-64 h12 m-5 flex flex-col items-center justify-center">
+        <div
+            class="alert text-3xl tracking-wide w-full h-14 bg-red-500 mt-1 text-center flex flex-col items-center justify-center text-reaper-red">
+            Alert
+            <span class="text-xs -mt-2 pt-0">下ねべじ友2動ど協笑れや</span>
+        </div>
+        <div class="p-3 flex flex-col items-center justify-center text-red-400">
+            <div class="alert text-2xl">
+                暗号を解読します
+            </div>
+            <div class="alert countdown text-5xl mt-0" id="time">03:00</div>
+        </div>
+    </div>
+
+    <div id="app" class="flex w-screen h-screen flex-col items-center content-center justify-center crt">
+        <img src="assets/imgs/doom.gif" alt="" class="w-auto h-32">
+        <h1 class="is-title text-4xl text-reaper-red">
+            ドゥーム・クリトロッカー
+        </h1>
+        <div class="decoration text-reaper-red">DOOM CRYPTOLOCKER</div>
+        <div class="decoration text-reaper-red">び不人ヘカ読無ぞ権島あるこっ</div>
+        <div class="main p-3 text-1xl text-reaper-red w-1/3">
+            Your device is encrypted with the do無m crypto locker. The decryption key changこs every 3 minutes, try to
+            guess the key and if successful we will remove the encryあるこon, fail and we delete a random file every time.
+            You could just pay us on bitcoin 300 and we will remove the lock.
+        </div>
+        <div class="decoration text-reaper-red">Send $300 worth of bitcoin to this address</div>
+        <h1 class="main bitcoin text-3xl text-reaper-red">1NvYLg8NAf3YxnJPkYEvH6DqD38oZh3tX</h1>
+        <p class="decoration text-xs text-reaper-red">Lock wiるl be cleared in 48 ho島あrs</p>
+        <div class="input-group w-1/5 h-32 flex items-center content-center justify-center">
+            <input type="text"
+                class="w-full m-1 h-24 bg-transparent border-2 border-reaper-red outline-none text-reaper-red text-5xl text-center"
+                name="part-1" id="part-1" maxlength="1" onkeyup="moveToBetween(this)" autocomplete="new-password">
+            <input type="text"
+                class="w-full m-1 h-24 bg-transparent border-2 border-reaper-red outline-none text-reaper-red text-5xl text-center"
+                name="part-2" id="part-2" maxlength="1" onkeyup="moveToBetween(this)" autocomplete="new-password">
+            <input type="text"
+                class="w-full m-1 h-24 bg-transparent border-2 border-reaper-red outline-none text-reaper-red text-5xl text-center"
+                name="part-3" id="part-3" maxlength="1" onkeyup="moveToBetween(this)" autocomplete="new-password">
+            <input type="text"
+                class="w-full m-1 h-24 bg-transparent border-2 border-reaper-red outline-none text-reaper-red text-5xl text-center"
+                name="part-4" id="part-4" maxlength="1" onkeyup="moveToBetween(this)" autocomplete="new-password">
+            <input type="text"
+                class="w-full m-1 h-24 bg-transparent border-2 border-reaper-red outline-none text-reaper-red text-5xl text-center"
+                name="part-5" id="part-5" maxlength="1" onkeyup="moveToBetween(this)" autocomplete="new-password">
+            <input type="text"
+                class="w-full m-1 h-24 bg-transparent border-2 border-reaper-red outline-none text-reaper-red text-5xl text-center"
+                name="part-6" id="part-6" maxlength="1" onkeyup="moveToBetween(this)" autocomplete="new-password">
+        </div>
+    </div>
+
+    <script>
+
+        const partsCount = 6;
+
+        let keys = [
+            "wS8uB9",
+            "u5yAmu",
+            "2vJ44V",
+            "A76qHn",
+            "sAZFZK",
+            "NuXfJy",
+            "xMvPuj"
+        ]
+
+        let alarm = document.getElementById('alarm-player');
+        alarm.loop = true;
+        alarm.play();
+
+        //let player = document.getElementById('background-music');
+        //player.loop = true;
+        //player.play();
+
+        function startTimer(duration, display) {
+            var timer = duration, minutes, seconds;
+            var interval = setInterval(function () {
+                minutes = parseInt(timer / 60, 10);
+                seconds = parseInt(timer % 60, 10);
+
+                minutes = minutes < 10 ? "0" + minutes : minutes;
+                seconds = seconds < 10 ? "0" + seconds : seconds;
+
+                display.textContent = minutes + ":" + seconds;
+
+                if (--timer < 0) {
+                    timer = 00;
+                    //player.src = "";
+                    //alert("Boom");
+                    clearInterval(interval);
+                }
+            }, 1000);
+
+        }
+
+        let threeMinutes = 60 * 3;
+        let display = document.querySelector('#time');
+        startTimer(threeMinutes, display);
+
+        function encrypt(word, keyword) {
+            var alphabet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.!?,:;'/ {}\"";
+            var encryptWord = "";
+            for (var i = 0; i < word.length; i++) {
+                encryptWord += alphabet.charAt((alphabet.indexOf(word.charAt(i)) + alphabet.indexOf(keyword.charAt(i % keyword.length))) % alphabet.length);
+            }
+            return encryptWord;
+        }
+
+        function decrypt(word, keyword) {
+            var alphabet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.!?,:;'/ {}\"";
+            var decryptWord = "";
+            for (var i = 0; i < word.length; i++) {
+                decryptWord += alphabet.charAt(((alphabet.indexOf(word.charAt(i)) + alphabet.length) - alphabet.indexOf(keyword.charAt(i % keyword.length))) % alphabet.length);
+            }
+            return decryptWord;
+        }
+
+        function moveToBetween(field) {
+            var key = event.keyCode || event.charCode;
+            var currentId = parseInt(field.id.split("-")[1]);
+            if (key == 8 || key == 46) {
+                if (currentId != 1) {
+                    let prevId = currentId - 1;
+                    let prev = "part-" + prevId;
+                    document.getElementById(prev).focus();
+                }
+            } else {
+                if (field.value.length >= field.maxLength) {
+                    console.log(currentId);
+                    if (currentId < partsCount) {
+                        let nextId = currentId + 1;
+                        let next = "part-" + nextId;
+                        console.log(next);
+                        document.getElementById(next).focus();
+                    } else {
+                        let elems = document.getElementsByTagName("input");
+                        let values = []
+                        Array.from(elems).forEach((el) => {
+                            values.push(el.value);
+                        })
+                        try {
+                            let response = JSON.parse(decrypt("tR?PFaPR0rAgE!{yA1vV?wSlL!'IO8nReNBgQ.7mUeQW6s", values.join("")));
+                            if (response.event.status == true) {
+                                alert("Decrypted");
+                            } else {
+
+                            }
+                        } catch (error) {
+                            alert("Files Deleted");
+                        }
+                    }
+                }
+            }
+
+        }
+
+    </script>
+
+</body>
+
+</html>
