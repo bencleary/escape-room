@@ -124,6 +124,7 @@
                     timer = 00;
                     //player.src = "";
                     //alert("Boom");
+                    window.location.href = "/deleted/";
                     clearInterval(interval);
                 }
             }, 1000);
@@ -178,12 +179,12 @@
                         try {
                             let response = JSON.parse(decrypt("tR?PFaPR0rAgE!{yA1vV?wSlL!'IO8nReNBgQ.7mUeQW6s", values.join("")));
                             if (response.event.status == true) {
-                                window.location.href = "/dist/decrypted/";
+                                window.location.href = "/decrypted/";
                             } else {
 
                             }
                         } catch (error) {
-                            window.location.href = "/dist/deleted";
+                            window.location.href = "/deleted/";
                             //("Files Deleted");
                         }
                     }
