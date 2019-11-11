@@ -30,8 +30,8 @@
 
 <body class="overflow-hidden bg-black">
 
-    <!-- <audio src="assets/sounds/redalert.mp3" id="background-music"></audio> -->
-    <audio src="assets/sounds/redalert.mp3" id="alarm-player"></audio>
+    <audio src="assets/sounds/BRD.mp3" id="background-music"></audio>
+    <audio id="alarm-player"></audio>
 
     <div class="mgs-alarm absolute top-0 right-0 bg-reaper-red md:w-64 m-5 flex flex-col items-center justify-center">
         <div
@@ -47,7 +47,8 @@
         </div>
     </div>
 
-    <div id="app" class="flex w-screen h-screen flex-col items-center content-center justify-center xs:justify-end sm:justify-center md:justify-center crt xs:p-1">
+    <div id="app"
+        class="flex w-screen h-screen flex-col items-center content-center justify-center xs:justify-end sm:justify-center md:justify-center crt xs:p-1">
         <img src="assets/imgs/doom.gif" alt="" class="w-auto h-32">
         <h1 class="is-title text-4xl xs:text-2xl md:text-4xl text-reaper-red">
             ドゥーム・クリトロッカー
@@ -62,7 +63,9 @@
         <div class="decoration text-reaper-red">Send $300 worth of bitcoin to this address</div>
         <h1 class="main bitcoin text-3xl text-reaper-red xs:text-2xl">1NvYLg8NAf3YxnJPkYEvH6DqD38oZh3tX</h1>
         <p class="decoration text-xs text-reaper-red">Lock wiるl be cleared in 48 ho島あrs</p>
-        <div class="input-group w-1/5 xs:w-full sm:w-2/3 md:w-2/3 lg:w-2/5 xl:w-1/5 h-32 flex items-center content-center justify-center">
+        <button class="main bg-red-400 text-reaper-red w-48 h-12 rounded mt-5 text-2xl" id="start-alarm">Start Attempt</button>
+        <div id="inputs"
+            class="hidden input-group w-1/5 xs:w-full sm:w-2/3 md:w-2/3 lg:w-2/5 xl:w-1/5 h-32 flex items-center content-center justify-center">
             <input type="text"
                 class="w-full m-1 h-24 bg-transparent border-2 border-reaper-red outline-none text-reaper-red text-5xl text-center"
                 name="part-1" id="part-1" maxlength="1" onkeyup="moveToBetween(this)" autocomplete="new-password">
@@ -82,9 +85,28 @@
                 class="w-full m-1 h-24 bg-transparent border-2 border-reaper-red outline-none text-reaper-red text-5xl text-center"
                 name="part-6" id="part-6" maxlength="1" onkeyup="moveToBetween(this)" autocomplete="new-password">
         </div>
+        <button id="give-up" class="hidden main bg-red-400 text-reaper-red w-48 h-12 rounded mt-5 text-2xl" id="start-alarm">Give Up?</button>
     </div>
 
     <script>
+
+        const dev = false;
+
+        function successUrl() {
+            if (dev) {
+                return "/dist/decrypted/";
+            } else {
+                return "/decrypted/";
+            }
+        }
+
+        function errorUrl() {
+            if (dev) {
+                return "/dist/deleted/";
+            } else {
+                return "/deleted/";
+            }
+        }
 
         // clears existing input
         Array.from(document.getElementsByTagName("input")).map(el => el.value = "");
@@ -101,13 +123,32 @@
             "xMvPuj"
         ]
 
+        let alarms = [
+            "assets/sounds/redalert.mp3",
+            "assets/sounds/alarm2.mp3"
+        ]
+
         let alarm = document.getElementById('alarm-player');
         alarm.loop = true;
-        alarm.play();
+        alarm.src = alarms[Math.floor(Math.random() * alarms.length)];
 
-        //let player = document.getElementById('background-music');
-        //player.loop = true;
-        //player.play();
+        let player = document.getElementById('background-music');
+        player.loop = true;
+        player.volume = 0.2;
+        player.play();
+
+        let start = document.getElementById('start-alarm');
+        start.addEventListener('click', function() {
+            player.pause();
+            alarm.play();
+            start.classList.add("hidden");
+            document.getElementById('inputs').classList.remove('hidden');
+            document.getElementById('give-up').classList.remove('hidden');
+        })
+
+        document.getElementById('give-up').addEventListener('click', function() {
+            window.location.href = errorUrl();
+        })
 
         function startTimer(duration, display) {
             var timer = duration, minutes, seconds;
@@ -124,7 +165,7 @@
                     timer = 00;
                     //player.src = "";
                     //alert("Boom");
-                    window.location.href = "/deleted/";
+                    window.location.href = errorUrl();
                     clearInterval(interval);
                 }
             }, 1000);
@@ -179,12 +220,12 @@
                         try {
                             let response = JSON.parse(decrypt("tR?PFaPR0rAgE!{yA1vV?wSlL!'IO8nReNBgQ.7mUeQW6s", values.join("")));
                             if (response.event.status == true) {
-                                window.location.href = "/decrypted/";
+                                window.location.href = successUrl();
                             } else {
 
                             }
                         } catch (error) {
-                            window.location.href = "/deleted/";
+                            window.location.href = errorUrl();
                             //("Files Deleted");
                         }
                     }
