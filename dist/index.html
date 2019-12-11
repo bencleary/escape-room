@@ -32,6 +32,8 @@
 
     <audio src="assets/sounds/BRD.mp3" id="background-music"></audio>
     <audio id="alarm-player"></audio>
+    <audio src="assets/sounds/skeletor running.mp3" id="laugh-player"></audio>
+    <audio src="assets/sounds/error.mp3" id="error-player"></audio>
 
     <div class="mgs-alarm absolute top-0 right-0 bg-reaper-red md:w-64 m-5 flex flex-col items-center justify-center">
         <div
@@ -47,6 +49,18 @@
         </div>
     </div>
 
+    <div id="uploading" class="absolute top-0 left-0 bg-reaper-red md:w-64 m-5 flex flex-col items-center justify-center hidden">
+        <div
+            class="alert text-3xl tracking-wide w-full h-14 bg-red-500 mt-1 text-center flex flex-col items-center justify-center text-reaper-red">
+            Data Uploading
+            <span class="text-xs -mt-2 pt-0">下ねべじ友2動ど協笑れや - <span id="services"></span></span>
+        </div>
+        <div class="p-3">
+
+            <img src="assets/imgs/data.gif"/>
+        </div>
+    </div>
+
     <div id="app"
         class="flex w-screen h-screen flex-col items-center content-center justify-center xs:justify-end sm:justify-center md:justify-center crt xs:p-1">
         <img src="assets/imgs/doom.gif" alt="" class="w-auto h-32">
@@ -57,15 +71,15 @@
         <div class="decoration text-reaper-red">び不人ヘカ読無ぞ権島あるこっ</div>
         <div class="main p-3 text-1xl text-reaper-red w-1/3 xs:w-full md:w-2/3 lg:w-2/3 xl:w-1/3 xs:text-center">
             Your device is encrypted with the do無m crypto locker. The decryption key changこs every 3 minutes, try to
-            guess the key and if successful we will remove the encryあるこon, fail and we delete a random file every time.
-            You could just pay us on bitcoin 300 and we will remove the lock.
+            guess the key and if successful we will remove the encryあるこon, fail and we release sensitive student data. Or pay 1 million pounds and we will remove the lock.
         </div>
-        <div class="decoration text-reaper-red">Send $300 worth of bitcoin to this address</div>
+        <div class="decoration text-reaper-red">Send 140 bitcoins to this address</div>
         <h1 class="main bitcoin text-3xl text-reaper-red xs:text-2xl">1NvYLg8NAf3YxnJPkYEvH6DqD38oZh3tX</h1>
         <p class="decoration text-xs text-reaper-red">Lock wiるl be cleared in 48 ho島あrs</p>
-        <button class="main bg-red-400 text-reaper-red w-48 h-12 rounded mt-5 text-2xl" id="start-alarm">Start Attempt</button>
+        <button class="main bg-red-400 text-reaper-red w-48 h-12 rounded mt-5 text-2xl" id="start-alarm">Start
+            Attempt</button>
         <div id="inputs"
-            class="hidden input-group w-1/5 xs:w-full sm:w-2/3 md:w-2/3 lg:w-2/5 xl:w-1/5 h-32 flex items-center content-center justify-center">
+            class="hidden input-group w-2/5 xs:w-full sm:w-2/3 md:w-2/3 lg:w-2/5 xl:w-2/5 h-32 flex items-center content-center justify-center">
             <input type="text"
                 class="w-full m-1 h-24 bg-transparent border-2 border-reaper-red outline-none text-reaper-red text-5xl text-center"
                 name="part-1" id="part-1" maxlength="1" onkeyup="moveToBetween(this)" autocomplete="new-password">
@@ -84,8 +98,14 @@
             <input type="text"
                 class="w-full m-1 h-24 bg-transparent border-2 border-reaper-red outline-none text-reaper-red text-5xl text-center"
                 name="part-6" id="part-6" maxlength="1" onkeyup="moveToBetween(this)" autocomplete="new-password">
+            <input type="text"
+                class="w-full m-1 h-24 bg-transparent border-2 border-reaper-red outline-none text-reaper-red text-5xl text-center"
+                name="part-6" id="part-7" maxlength="1" onkeyup="moveToBetween(this)" autocomplete="new-password">
+            <input type="text"
+                class="w-full m-1 h-24 bg-transparent border-2 border-reaper-red outline-none text-reaper-red text-5xl text-center"
+                name="part-6" id="part-8" maxlength="1" onkeyup="moveToBetween(this)" autocomplete="new-password">
         </div>
-        <button id="give-up" class="hidden main bg-red-400 text-reaper-red w-48 h-12 rounded mt-5 text-2xl" id="start-alarm">Give Up?</button>
+        <button id="give-up" class="hidden main bg-red-400 text-reaper-red w-48 h-12 rounded mt-5 text-2xl">Give Up?</button>
     </div>
 
     <script>
@@ -101,26 +121,20 @@
         }
 
         function errorUrl() {
-            if (dev) {
-                return "/dist/deleted/";
-            } else {
-                return "/deleted/";
-            }
+            let laugh = document.getElementById('laugh-player');
+            let err = document.getElementById('error-player');
+            err.play();
+            setTimeout(laugh.play(), 100);
+            Array.from(document.getElementsByTagName("input")).map(el => el.value = "");
         }
 
         // clears existing input
         Array.from(document.getElementsByTagName("input")).map(el => el.value = "");
 
-        const partsCount = 6;
+        const partsCount = 8;
 
         let keys = [
-            "wS8uB9",
-            "u5yAmu",
-            "2vJ44V",
-            "A76qHn",
-            "sAZFZK",
-            "NuXfJy",
-            "xMvPuj"
+            "Ed73ch20",
         ]
 
         let alarms = [
@@ -128,26 +142,19 @@
             "assets/sounds/alarm2.mp3"
         ]
 
-        let alarm = document.getElementById('alarm-player');
-        alarm.loop = true;
-        alarm.src = alarms[Math.floor(Math.random() * alarms.length)];
+        //let alarm = document.getElementById('alarm-player');
+        //alarm.loop = true;
+        //alarm.src = alarms[Math.floor(Math.random() * alarms.length)];
 
         let player = document.getElementById('background-music');
         player.loop = true;
         player.volume = 0.2;
         player.play();
 
-        let start = document.getElementById('start-alarm');
-        start.addEventListener('click', function() {
-            player.pause();
-            alarm.play();
-            start.classList.add("hidden");
-            document.getElementById('inputs').classList.remove('hidden');
-            document.getElementById('give-up').classList.remove('hidden');
-        })
 
-        document.getElementById('give-up').addEventListener('click', function() {
-            window.location.href = errorUrl();
+
+        document.getElementById('give-up').addEventListener('click', function () {
+            errorUrl();
         })
 
         function startTimer(duration, display) {
@@ -174,7 +181,16 @@
 
         let threeMinutes = 60 * 3;
         let display = document.querySelector('#time');
-        startTimer(threeMinutes, display);
+
+        let start = document.getElementById('start-alarm');
+        start.addEventListener('click', function () {
+            player.pause();
+            //alarm.play();
+            start.classList.add("hidden");
+            document.getElementById('inputs').classList.remove('hidden');
+            document.getElementById('give-up').classList.remove('hidden');
+            startTimer(threeMinutes, display);
+        })
 
         function encrypt(word, keyword) {
             var alphabet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.!?,:;'/ {}\"";
@@ -218,14 +234,18 @@
                             values.push(el.value);
                         })
                         try {
-                            let response = JSON.parse(decrypt("tR?PFaPR0rAgE!{yA1vV?wSlL!'IO8nReNBgQ.7mUeQW6s", values.join("")));
+                            let response = JSON.parse(decrypt("Bc!cgu\"Zwa6akA,4D/66gj{cTw;/pgTZWw7awz1SXuf7af", values.join("")));
                             if (response.event.status == true) {
                                 window.location.href = successUrl();
                             } else {
 
                             }
                         } catch (error) {
-                            window.location.href = errorUrl();
+                            let data = document.getElementById('uploading')
+                            if (data.classList.contains('hidden')) {
+                                data.classList.remove('hidden');
+                            }
+                            errorUrl();
                             //("Files Deleted");
                         }
                     }
