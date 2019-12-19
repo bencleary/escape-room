@@ -142,9 +142,9 @@
             "assets/sounds/alarm2.mp3"
         ]
 
-        //let alarm = document.getElementById('alarm-player');
-        //alarm.loop = true;
-        //alarm.src = alarms[Math.floor(Math.random() * alarms.length)];
+        let alarm = document.getElementById('alarm-player');
+        alarm.loop = true;
+        alarm.src = alarms[Math.floor(Math.random() * alarms.length)];
 
         let player = document.getElementById('background-music');
         player.loop = true;
@@ -185,7 +185,7 @@
         let start = document.getElementById('start-alarm');
         start.addEventListener('click', function () {
             player.pause();
-            //alarm.play();
+            alarm.play();
             start.classList.add("hidden");
             document.getElementById('inputs').classList.remove('hidden');
             document.getElementById('give-up').classList.remove('hidden');

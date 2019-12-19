@@ -5,9 +5,16 @@
   "author": "Ben Cleary",
   "license": "MIT",
   "dependencies": {
+    "express": "^4.17.1",
     "tailwindcss": "^1.1.3"
   },
   "scripts": {
     "build:css": "tailwind build src/styles/main.css -o dist/static/css/main.css"
+  },
+  "bin": "server.js",
+  "pkg": {
+    "assets": [
+      "dist/**/*"
+    ]
   }
 }
