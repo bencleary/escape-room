@@ -6,10 +6,13 @@
   "license": "MIT",
   "dependencies": {
     "express": "^4.17.1",
+    "pkg": "^4.4.2",
     "tailwindcss": "^1.1.3"
   },
   "scripts": {
-    "build:css": "tailwind build src/styles/main.css -o dist/static/css/main.css"
+    "build:css": "tailwind build src/styles/main.css -o dist/static/css/main.css",
+    "build:bundle": "pkg server.js",
+    "build:server": "node server.js"
   },
   "bin": "server.js",
   "pkg": {
